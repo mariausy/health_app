@@ -1,4 +1,4 @@
-# healt_app
+# health_app
 
 A new Flutter project.
 
