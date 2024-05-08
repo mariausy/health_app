@@ -8,6 +8,7 @@ import 'package:project_code/utils/impact.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project_code/screens/loginPage.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -63,6 +64,21 @@ class HomePage extends StatelessWidget {
                 },
                 child: Text('Get the data')),
                 
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Text('Menu'),
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () => _toLoginPage(context),
+            ),
           ],
         ),
       ),
@@ -168,4 +184,16 @@ class HomePage extends StatelessWidget {
     return response.statusCode;
 
   } //_refreshTokens
+
+void _toLoginPage(BuildContext context) async{
+    //Get the instance and remove isUserLogged flag from shared preferences 
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.remove('isUserLogged');
+
+    //Pop the drawer first 
+    Navigator.pop(context);
+    //Then pop the HomePage
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+  }//_toCalendarPage  
+
 } //HomePage
