@@ -1,6 +1,6 @@
 {
-    "name": "project_code",
-    "short_name": "project_code",
+    "name": "visualize_steps",
+    "short_name": "visualize_steps",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
