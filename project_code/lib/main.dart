@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:project_code/providers/data_provider.dart';
-import 'package:project_code/screens/homepage.dart';
+import 'package:moder8/providers/data_provider.dart';
+import 'package:moder8/screens/homepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:project_code/screens/loginpage.dart';
+import 'package:moder8/screens/loginpage.dart';
 
 void main() {
   runApp(MyApp());

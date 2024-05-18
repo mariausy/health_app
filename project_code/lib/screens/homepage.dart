@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:project_code/providers/data_provider.dart';
-import 'package:project_code/services/impact.dart';
-import 'package:project_code/widgets/line_plot.dart';
+import 'package:moder8/providers/data_provider.dart';
+import 'package:moder8/services/impact.dart';
+import 'package:moder8/widgets/line_plot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:project_code/screens/loginpage.dart';
+import 'package:moder8/screens/loginpage.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
