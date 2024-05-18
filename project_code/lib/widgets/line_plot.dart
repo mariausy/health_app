@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:visualize_steps/models/stepdata.dart';
+import 'package:project_code/models/stepdata.dart';
 
 /// Local import
 

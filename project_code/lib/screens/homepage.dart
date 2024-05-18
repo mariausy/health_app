@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:visualize_steps/providers/data_provider.dart';
-import 'package:visualize_steps/services/impact.dart';
-import 'package:visualize_steps/widgets/line_plot.dart';
+import 'package:project_code/providers/data_provider.dart';
+import 'package:project_code/services/impact.dart';
+import 'package:project_code/widgets/line_plot.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project_code/screens/loginpage.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -61,6 +63,31 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Text('Menu'),
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () => _toLoginPage(context),
+            ),
+          ],
+        ),)
     );
   } //build
 } //HomePage
+
+void _toLoginPage(BuildContext context) async{
+    //Get the instance and remove isUserLogged flag from shared preferences 
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.remove('isUserLogged');
+
+    //Pop the drawer first 
+    Navigator.pop(context);
+    //Then pop the HomePage
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+  }//_toCalendarPage 

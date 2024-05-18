@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:visualize_steps/models/stepdata.dart';
-import 'package:visualize_steps/services/impact.dart';
+import 'package:project_code/models/stepdata.dart';
+import 'package:project_code/services/impact.dart';
 
 class DataProvider extends ChangeNotifier {
 
