@@ -15,8 +15,9 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('HomePage'),
       ),
-      body: Center(
-        child: Column(
+      body: ListView(
+        children: <Widget>[
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Consumer<DataProvider>(builder: (context, data, child) {
@@ -60,8 +61,20 @@ class HomePage extends StatelessWidget {
                 },
                 child: Text('Clear data')
             ),
+            SizedBox(
+              height: 10,
+            ),
+            Consumer<DataProvider>(builder: (context, data, child) {
+              if (data.stepData.length == 0) {
+                return Text('Nothing to display');
+              }//if
+              else {
+                return StepDataCircle(stepData: data.stepData);
+              }//else
+            }),
           ],
         ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
