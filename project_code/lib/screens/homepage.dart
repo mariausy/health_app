@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:visualize_steps/providers/data_provider.dart';
-import 'package:visualize_steps/services/impact.dart';
-import 'package:visualize_steps/widgets/line_plot.dart';
+import 'package:moder8/providers/data_provider.dart';
+import 'package:moder8/services/impact.dart';
+import 'package:moder8/widgets/line_plot.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -18,11 +18,11 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Consumer<DataProvider>(builder: (context, data, child) {
-              if (data.stepData.length == 0) {
+              if (data.heartData.length == 0) {
                 return Text('Nothing to display');
               }//if
               else {
-                return StepDataPlot(stepData: data.stepData);
+                return HeartDataPlot(heartData: data.heartData);
               }//else
             }),
             SizedBox(
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   Provider.of<DataProvider>(context, listen: false)
-                      .fetchStepData('2023-05-13');
+                      .fetchHeartData('2023-05-13');
                 },
                 child: Text('Fetch data')
             ),

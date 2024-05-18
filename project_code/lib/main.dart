@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:visualize_steps/providers/data_provider.dart';
-import 'package:visualize_steps/screens/homepage.dart';
+import 'package:moder8/providers/data_provider.dart';
+import 'package:moder8/screens/homepage.dart';
 
 void main() {
   runApp(MyApp());
