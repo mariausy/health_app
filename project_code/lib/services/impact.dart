@@ -13,6 +13,7 @@ class ImpactService {
   static String refreshEndpoint = 'gate/v1/refresh/';
   
   static String stepsEndpoint = 'data/v1/steps/patients/';
+  static String heartEndpoint = 'data/v1/heart_rate/patients/';
 
   static String username = '14OtgfFznc';
   static String password = '12345678!';
@@ -82,6 +83,37 @@ class ImpactService {
 
     //Create the (representative) request
     final url = ImpactService.baseUrl + ImpactService.stepsEndpoint + ImpactService.patientUsername + '/day/$day/';
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    //Get the response
+    print('Calling: $url');
+    final response = await http.get(Uri.parse(url), headers: headers);
+    
+    //if OK parse the response, otherwise return null
+    var result = null;
+    if (response.statusCode == 200) {
+      result = jsonDecode(response.body);
+    } //if
+
+    //Return the result
+    return result;
+
+  } //_requestData
+
+  static Future<dynamic> fetchHeartData(String day) async {
+
+    //Get the stored access token (Note that this code does not work if the tokens are null)
+    final sp = await SharedPreferences.getInstance();
+    var access = sp.getString('access');
+
+    //If access token is expired, refresh it
+    if(JwtDecoder.isExpired(access!)){
+      await ImpactService.refreshTokens();
+      access = sp.getString('access');
+    }//if
+
+    //Create the (representative) request
+    final url = ImpactService.baseUrl + ImpactService.heartEndpoint + ImpactService.patientUsername + '/day/$day/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     //Get the response

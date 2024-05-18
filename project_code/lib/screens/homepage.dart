@@ -21,11 +21,11 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Consumer<DataProvider>(builder: (context, data, child) {
-              if (data.stepData.length == 0) {
+              if (data.heartData.length == 0) {
                 return Text('Nothing to display');
               }//if
               else {
-                return StepDataPlot(stepData: data.stepData);
+                return HeartDataPlot(heartData: data.heartData);
               }//else
             }),
             SizedBox(
@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   Provider.of<DataProvider>(context, listen: false)
-                      .fetchStepData('2023-05-13');
+                      .fetchHeartData('2023-05-13');
                 },
                 child: Text('Fetch data')
             ),

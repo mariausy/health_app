@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:moder8/models/stepdata.dart';
+import 'package:moder8/models/heartdata.dart';
 
 /// Local import
 
 ///Renders default line series chart
-class StepDataPlot extends StatelessWidget {
+class HeartDataPlot extends StatelessWidget {
   ///Creates default line series chart
-  StepDataPlot({Key? key, required this.stepData}) : super(key: key);
+  HeartDataPlot({Key? key, required this.heartData}) : super(key: key);
 
-  final List<StepData> stepData;
+  final List<HeartData> heartData;
 
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
-      title: ChartTitle(text: 'Yesterday steps'),
+      title: ChartTitle(text: 'Yesterday heart_rate'),
       primaryXAxis: const DateTimeAxis(majorGridLines: MajorGridLines(width: 0)),
       primaryYAxis: const NumericAxis(
-          labelFormat: '{value} steps',
+          labelFormat: '{value} heart_rate',
           axisLine: AxisLine(width: 0),
           majorTickLines: MajorTickLines(color: Colors.transparent)),
-      series: _getStepDataSeries(),
+      series: _getHeartDataSeries(),
       tooltipBehavior: TooltipBehavior(enable: true),
     );
   }
 
   /// The method returns line series to chart.
-  List<LineSeries<StepData, DateTime>> _getStepDataSeries() {
-    return <LineSeries<StepData, DateTime>>[
-      LineSeries<StepData, DateTime>(
-          dataSource: stepData,
+  List<LineSeries<HeartData, DateTime>> _getHeartDataSeries() {
+    return <LineSeries<HeartData, DateTime>>[
+      LineSeries<HeartData, DateTime>(
+          dataSource: heartData,
           xValueMapper: (data, _) => data.time,
           yValueMapper: (data, _) => data.value,
-          name: 'Steps',
+          name: 'Heart_rate',
           markerSettings: const MarkerSettings(isVisible: true))
     ];
   }//_getStepDataSeries
