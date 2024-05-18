@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:moder8/models/heartdata.dart';
+import 'package:moder8/models/stepdata.dart';
 
 /// Local import
 

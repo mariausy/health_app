@@ -5,6 +5,7 @@ import 'package:moder8/services/impact.dart';
 import 'package:moder8/widgets/line_plot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moder8/screens/loginpage.dart';
+// import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -49,6 +50,9 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchHeartData('2023-05-13');
+                      //DateFormat('yyyy-MM-dd').format(DateTime.now())
+                  Provider.of<DataProvider>(context, listen: false)
+                      .fetchStepData('2023-05-13');
                 },
                 child: Text('Fetch data')
             ),
