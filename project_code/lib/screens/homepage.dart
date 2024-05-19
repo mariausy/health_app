@@ -6,6 +6,7 @@ import 'package:moder8/widgets/line_plot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moder8/screens/loginpage.dart';
 // import 'package:intl/intl.dart';
+import 'package:moder8/screens/quotes.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -178,7 +179,6 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
-    return scaffold;
   }
 
   // Function to increment alcohol units count
