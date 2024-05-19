@@ -4,6 +4,7 @@ import 'package:moder8/screens/loginpage.dart';
 import 'package:moder8/screens/homepage.dart';
 import 'package:provider/provider.dart';
 import 'package:moder8/providers/data_provider.dart';
+import 'package:moder8/screens/quotes.dart';
 
 // A list of quotes
 final List<String> effects = [
@@ -29,6 +30,7 @@ class UnitInformationPage extends StatefulWidget {
 class _UnitInformationPage extends State<UnitInformationPage> {
   int alcoholUnits = 0; //variable to store abounts of alohol units
   String effectText = "";
+  int _currentIndex = 0;
 
     @override
   void initState() {
@@ -41,6 +43,33 @@ class _UnitInformationPage extends State<UnitInformationPage> {
     final count = sharedPreferences.getInt('alcoholUnits') ?? 0;
     setState(() {
       alcoholUnits = count;
+    });
+    if (alcoholUnits < effects.length) {
+      effectText = effects[alcoholUnits];
+    } else {
+      effectText = effects.last;
+    }
+  }
+
+  void _incrementAlcoholUnits() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final newCount = alcoholUnits + 1;
+    sharedPreferences.setInt('alcoholUnits', newCount);
+    setState(() {
+      alcoholUnits = newCount;
+    });
+    if (alcoholUnits < effects.length) {
+      effectText = effects[alcoholUnits];
+    } else {
+      effectText = effects.last;
+    }
+  }
+
+  void _clearAlcoholUnits() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setInt('alcoholUnits', 0);
+    setState(() {
+      alcoholUnits = 0;
     });
     if (alcoholUnits < effects.length) {
       effectText = effects[alcoholUnits];
@@ -115,6 +144,81 @@ class _UnitInformationPage extends State<UnitInformationPage> {
                 _toLoginPage(context);
               },
             ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.call),
+            label: 'Emergency calls',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark_add),
+            label: 'Quote',
+          ),
+          BottomNavigationBarItem(
+            icon: Stack(
+              children: [
+                Icon(Icons.add_circle),
+                if (alcoholUnits > 0)
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.redAccent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 16,
+                        minHeight: 16,
+                      ),
+                      child: Text(
+                        '$alcoholUnits',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            label: 'Add bottle',
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+
+          switch (index) {
+            case 0:
+              showCard(context, 'Emergency Calls', 'Italy: 112');
+              break;
+            case 1:
+              showQuoteDialog(context);
+              break;
+            case 2:
+              //Want to counts alcohol units
+              _incrementAlcoholUnits();
+              break;
+            default:
+              break;
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _clearAlcoholUnits,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.delete), // Icon displayed above the text
+            SizedBox(height: 4), // Spacer between icon and text
+            Text('Clear'), // Text displayed under the icon
           ],
         ),
       ),
