@@ -53,6 +53,8 @@ class HomePage extends StatelessWidget {
                       //DateFormat('yyyy-MM-dd').format(DateTime.now())
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchStepData('2023-05-13');
+                  Provider.of<DataProvider>(context, listen: false)
+                      .fetchSleepData('2023-05-13');
                 },
                 child: Text('Fetch data')
             ),
@@ -69,11 +71,11 @@ class HomePage extends StatelessWidget {
               height: 10,
             ),
             Consumer<DataProvider>(builder: (context, data, child) {
-              if (data.stepData.length == 0) {
+              if (data.stepData.length == 0 || data.sleepData.length==0) {
                 return Text('Nothing to display');
               }//if
               else {
-                return StepDataCircle(stepData: data.stepData);
+                return DailyCircle(stepData: data.stepData, sleepData: data.sleepData);
               }//else
             }),
           ],
