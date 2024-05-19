@@ -55,8 +55,15 @@ class DataProvider extends ChangeNotifier {
 
     //if OK parse the response adding all the elements to the list, otherwise do nothing
     if (data != null) {
-    sleepData.add(
-      SleepData.fromJson(data['data']['date'], data['data']['data']));
+      if(data['data']['data'][0] is Map<String, dynamic>){
+        sleepData.add(
+          SleepData.fromJson(data['data']['date'], data['data']['data'][0]));
+      }
+      else if(data['data']['data'] is Map<String, dynamic>){
+        sleepData.add(
+          SleepData.fromJson(data['data']['date'], data['data']['data']));
+      }
+    
     } //for
     //remember to notify the listeners
     notifyListeners();
