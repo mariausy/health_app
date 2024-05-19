@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moder8/screens/unit_information.dart';
 import 'package:provider/provider.dart';
 import 'package:moder8/providers/data_provider.dart';
 import 'package:moder8/services/impact.dart';
@@ -147,6 +148,14 @@ class _HomePageState extends State<HomePage> {
           children: [
             const DrawerHeader(
               child: Text('Menu'),
+            ),
+            ListTile(
+              title: Text('Unit information'),
+              onTap: () {
+                Provider.of<DataProvider>(context, listen: false).clearData();
+                Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (_) => UnitInformationPage()));
+              },
             ),
             ListTile(
               leading: Icon(Icons.logout),
