@@ -1,37 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:moder8/models/heartdata.dart';
 
-class StressLevel extends StatelessWidget {
+class StressLevel{
   ///Creates default line series chart
-  StressLevel({Key? key, required this.heartData}) : super(key: key);
+  StressLevel({required this.heartData});
   
   final List<HeartData> heartData;
-  
-  @override
-  Widget build(BuildContext context) {
-    String stressLevel = calculateStressLevel(); // Call the method and store the result
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Stress Level'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Stress level: $stressLevel', // Use the result here
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
 
   String calculateStressLevel(){
-    /*
     if (heartData.isEmpty){
       return "No data"; // Add a default return statement
     }
@@ -51,30 +27,44 @@ class StressLevel extends StatelessWidget {
           }
         }
       }
-      double hrvIndex = rrTotal/rrMax;
-      */
-    return stressLevels(50);
-//    }
+      int hrvIndex = (rrTotal/rrMax).round();
+    return stressLevels(hrvIndex);
+    }
   }
-/*
+
   List<HeartData> getLastTwoMinutesHeartData() {
     DateTime lastTime = heartData.last.time;
     DateTime twoMinutesAgo = lastTime.subtract(Duration(minutes: 2));
     return heartData.where((data) => data.time.isAfter(twoMinutesAgo)).toList();
   }
-*/
-  String stressLevels(double hrvIndex){
+
+  String stressLevels(int hrvIndex){
     if (hrvIndex > 1 && hrvIndex <= 20){
-      return "$hrvIndex - Stressed";
+      return "$hrvIndex - High";
     }
     else if (hrvIndex > 20 && hrvIndex <= 55){
-      return "$hrvIndex - Neutral";
+      return "$hrvIndex - Moderate";
     }
     else if (hrvIndex > 55){
-      return "$hrvIndex - Deeply Relaxed";
+      return "$hrvIndex - Low";
     }
     else {
       return "Something went wrong, refresh app";
+    }
+  }
+
+  int getstressLevels(int hrvIndex){
+    if (hrvIndex > 1 && hrvIndex <= 20){
+      return 3;
+    }
+    else if (hrvIndex > 20 && hrvIndex <= 55){
+      return 2;
+    }
+    else if (hrvIndex > 55){
+      return 1;
+    }
+    else {
+      return 2;
     }
   }
 }//StepDataPlot

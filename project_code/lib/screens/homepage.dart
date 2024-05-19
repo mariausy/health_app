@@ -82,16 +82,16 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 10,
             ), 
-            /*
             Consumer<DataProvider>(builder: (context, data, child) {
               if (data.heartData.length == 0) {
                 return Text('');
               }//if
               else {
-                return StressLevel(heartData: data.heartData);
+                  StressLevel stressLevel = StressLevel(heartData: data.heartData);
+                  String stressLevelText = stressLevel.calculateStressLevel();
+                  return Text("Stress Level: $stressLevelText");
               }//else
-            }),
-            */           
+            }),          
             Consumer<DataProvider>(builder: (context, data, child) {
               if (data.stepData.length == 0 || data.sleepData.length==0) {
                 return Text('No data available for daily goals');
