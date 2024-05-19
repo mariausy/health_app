@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:moder8/screens/homepage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:moder8/providers/data_provider.dart';
 

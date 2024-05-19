@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class SleepData{
   final String dateOfSleep;
   final int minutesAsleep;
