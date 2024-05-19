@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moder8/models/heartdata.dart';
 import 'package:moder8/models/stress_level.dart';
 import 'package:provider/provider.dart';
 import 'package:moder8/providers/data_provider.dart';
@@ -8,6 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moder8/screens/loginpage.dart';
 import 'package:intl/intl.dart';
 import 'package:moder8/screens/quotes.dart';
+import 'package:moder8/models/stepdata.dart';
+import 'package:moder8/models/sleepdata.dart';
+import 'package:moder8/screens/stress_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -21,6 +26,37 @@ class _HomePageState extends State<HomePage> {
   int alcoholUnits = 0; //variable to store abounts of alohol units
 
   @override
+  void initState() {
+    super.initState();
+    _loadAlcoholUnits(); // Load alcohol units count when app starts
+  }
+
+  void _loadAlcoholUnits() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final count = sharedPreferences.getInt('alcoholUnits') ?? 0;
+    setState(() {
+      alcoholUnits = count;
+    });
+  }
+
+  void _incrementAlcoholUnits() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final newCount = alcoholUnits + 1;
+    sharedPreferences.setInt('alcoholUnits', newCount);
+    setState(() {
+      alcoholUnits = newCount;
+    });
+  }
+
+  void _clearAlcoholUnits() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setInt('alcoholUnits', 0);
+    setState(() {
+      alcoholUnits = 0;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(232, 212, 239, 1),
@@ -29,20 +65,22 @@ class _HomePageState extends State<HomePage> {
         title: const Row(
           children: [
             Icon(Icons.wine_bar_outlined),
-            Text('Moder8',
+            Text(
+              'Moder8',
               style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),), 
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),
       body: ListView(
         children: <Widget>[
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
                 onPressed: () async {
                   // Clear data
                   Provider.of<DataProvider>(context, listen: false).clearData();
@@ -57,51 +95,62 @@ class _HomePageState extends State<HomePage> {
 
                   // Fetch data
                   Provider.of<DataProvider>(context, listen: false)
-                      .fetchHeartData(DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1))));                   
+                      .fetchHeartData(DateFormat('yyyy-MM-dd').format(
+                          DateTime.now().subtract(const Duration(days: 1))));
                   Provider.of<DataProvider>(context, listen: false)
-                      .fetchStepData(DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1))));
+                      .fetchStepData(DateFormat('yyyy-MM-dd').format(
+                          DateTime.now().subtract(const Duration(days: 1))));
                   Provider.of<DataProvider>(context, listen: false)
-                      .fetchSleepData(DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1))));
+                      .fetchSleepData(DateFormat('yyyy-MM-dd').format(
+                          DateTime.now().subtract(const Duration(days: 1))));
                 },
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.sync),
-                    Text('Synchronize'), 
+                    Text('Synchronize'),
                   ],
                 ),
-            ),
-            Consumer<DataProvider>(builder: (context, data, child) {
-              if (data.heartData.length == 0) {
-                return Text('No heart rate data available');
-              }//if
-              else {
-                return HeartDataPlot(heartData: data.heartData);
-              }//else
-            }),
-            SizedBox(
-              height: 10,
-            ), 
-            Consumer<DataProvider>(builder: (context, data, child) {
-              if (data.heartData.length == 0) {
-                return Text('');
-              }//if
-              else {
-                  StressLevel stressLevel = StressLevel(heartData: data.heartData);
-                  String stressLevelText = stressLevel.calculateStressLevel();
-                  return Text("Stress Level: $stressLevelText");
-              }//else
-            }),          
-            Consumer<DataProvider>(builder: (context, data, child) {
-              if (data.stepData.length == 0 || data.sleepData.length==0) {
-                return Text('No data available for daily goals');
-              }//if
-              else {
-                return DailyCircle(stepData: data.stepData, sleepData: data.sleepData);
-              }//else
-            }),
-          ],
-        ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => StressPage(stressLevel: 2),
+                  ),
+                );
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.favorite_outline),
+                    Text('Stress'),
+                  ],
+                ),
+              ),
+              Consumer<DataProvider>(builder: (context, data, child) {
+                if (data.heartData.length == 0) {
+                  return Text('No heart rate data available');
+                } //if
+                else {
+                  return HeartDataPlot(heartData: data.heartData);
+                } //else
+              }),
+              SizedBox(
+                height: 10,
+              ),
+              
+              Consumer<DataProvider>(builder: (context, data, child) {
+                if (data.stepData.length == 0 || data.sleepData.length == 0) {
+                  return Text('No data available for daily goals');
+                } //if
+                else {
+                  return DailyCircle(
+                      stepData: data.stepData, sleepData: data.sleepData);
+                } //else
+              }),
+            ],
+          ),
         ],
       ),
       drawer: Drawer(
@@ -132,7 +181,6 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark_add),
             label: 'Quote',
-            backgroundColor: Colors.pink,
           ),
           BottomNavigationBarItem(
             icon: Stack(
@@ -144,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                     child: Container(
                       padding: EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: Colors.redAccent,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       constraints: BoxConstraints(
@@ -173,8 +221,7 @@ class _HomePageState extends State<HomePage> {
 
           switch (index) {
             case 0:
-              showCard(
-                  context, 'Emergency Calls', 'Italy: 112');
+              showCard(context, 'Emergency Calls', 'Italy: 112');
               break;
             case 1:
               showQuoteDialog(context);
@@ -188,16 +235,27 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _clearAlcoholUnits,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.delete), // Icon displayed above the text
+            SizedBox(height: 4), // Spacer between icon and text
+            Text('Clear'), // Text displayed under the icon
+          ],
+        ),
+      ),
     );
   }
 
   // Function to increment alcohol units count
-  void _incrementAlcoholUnits() {
-    setState(() {
-      alcoholUnits++;
-    });
-    // Optionally, you can show a notification or perform any other action here
-  }
+  // void _incrementAlcoholUnits() {
+  // setState(() {
+  //   alcoholUnits++;
+  // });
+  // Optionally, you can show a notification or perform any other action here
+  // }
 }
 
 void _toLoginPage(BuildContext context) async {
@@ -211,5 +269,4 @@ void _toLoginPage(BuildContext context) async {
   Navigator.of(context)
       .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
 } //_toCalendarPage
-
 
