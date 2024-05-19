@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moder8/models/stress_level.dart';
 import 'package:moder8/models/heartdata.dart';
 import 'package:provider/provider.dart';
 import 'package:moder8/providers/data_provider.dart';
