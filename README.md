@@ -1,16 +1,2 @@
-# health_app
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Moder8
+This application is the project in the subject Biomedical Wearable Technologies for Healthcare and Wellbeing. The application will recieve data from Impact by the use of Flutter and Dart. The data will be visualized and used in order to calculate stress, in order to detect and prevent overdose of alcohol due to stress. 

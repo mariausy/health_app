@@ -5,7 +5,7 @@ import 'package:moder8/services/impact.dart';
 import 'package:moder8/widgets/line_plot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moder8/screens/loginpage.dart';
-// import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 import 'package:moder8/screens/quotes.dart';
 
 class HomePage extends StatefulWidget {
@@ -88,12 +88,11 @@ class _HomePageState extends State<HomePage> {
 
                   // Fetch data
                   Provider.of<DataProvider>(context, listen: false)
-                      .fetchHeartData('2023-05-13');
-                      //DateFormat('yyyy-MM-dd').format(DateTime.now())
+                      .fetchHeartData(DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1))));                   
                   Provider.of<DataProvider>(context, listen: false)
-                      .fetchStepData('2023-05-13');
+                      .fetchStepData(DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1))));
                   Provider.of<DataProvider>(context, listen: false)
-                      .fetchSleepData('2023-05-13');
+                      .fetchSleepData(DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1))));
                 },
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
