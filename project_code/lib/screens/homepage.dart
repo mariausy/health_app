@@ -141,6 +141,16 @@ class _HomePageState extends State<HomePage> {
               ),
               
               Consumer<DataProvider>(builder: (context, data, child) {
+                if (data.heartData.length == 0) {
+                  return Text('');
+                }//if
+                else {
+                  StressLevel stressLevel = StressLevel(heartData: data.heartData);
+                  String stressLevelText = stressLevel.calculateStressLevel();
+                  return Text("Stress Level: $stressLevelText");
+                }//else
+              }),
+              Consumer<DataProvider>(builder: (context, data, child) {
                 if (data.stepData.length == 0 || data.sleepData.length == 0) {
                   return Text('No data available for daily goals');
                 } //if
