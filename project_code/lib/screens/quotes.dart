@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart' show AlertDialog, BuildContext, Card, EdgeInsets, Navigator, Padding, Text, TextButton, TextStyle, showDialog;
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:moder8/providers/data_provider.dart';
-import 'package:moder8/services/impact.dart';
-import 'package:moder8/widgets/line_plot.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:moder8/screens/loginpage.dart';
-import 'package:moder8/screens/quotes.dart';
  
  // A list of quotes
   final List<String> quotes = [

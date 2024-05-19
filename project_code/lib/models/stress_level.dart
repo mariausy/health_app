@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:moder8/models/heartdata.dart';
 
 class StressLevel{

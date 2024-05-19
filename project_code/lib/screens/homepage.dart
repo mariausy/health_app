@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moder8/screens/unit_information.dart';
 import 'package:moder8/models/stress_level.dart';
-import 'package:moder8/models/heartdata.dart';
 import 'package:provider/provider.dart';
 import 'package:moder8/providers/data_provider.dart';
 import 'package:moder8/services/impact.dart';
@@ -12,7 +11,6 @@ import 'package:moder8/screens/loginpage.dart';
 import 'package:intl/intl.dart';
 import 'package:moder8/screens/quotes.dart';
 import 'package:moder8/models/stepdata.dart';
-import 'package:moder8/models/sleepdata.dart';
 import 'package:moder8/screens/stress_page.dart';
 
 class HomePage extends StatefulWidget {
