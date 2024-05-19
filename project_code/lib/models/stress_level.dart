@@ -6,6 +6,7 @@ class StressLevel{
   StressLevel({required this.heartData});
   
   final List<HeartData> heartData;
+  int hrvIndex = 1;
 
   String calculateStressLevel(){
     if (heartData.isEmpty){
@@ -27,7 +28,7 @@ class StressLevel{
           }
         }
       }
-      int hrvIndex = (rrTotal/rrMax).round();
+      hrvIndex = (rrTotal/rrMax).round();
     return stressLevels(hrvIndex);
     }
   }
@@ -53,7 +54,7 @@ class StressLevel{
     }
   }
 
-  int getstressLevels(int hrvIndex){
+  int getstressLevels(){
     if (hrvIndex > 1 && hrvIndex <= 20){
       return 3;
     }
