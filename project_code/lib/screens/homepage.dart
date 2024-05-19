@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  int alcoholUnits = 0; //variable to store abounts of alohol units
 
   @override
   Widget build(BuildContext context) {
@@ -83,37 +84,47 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Tooltip(
-            message: 'Quote app',
-            child: FloatingActionButton(
-              backgroundColor: const Color.fromARGB(255, 241, 153, 182),
-              child: Icon(Icons.bookmark_add),
-              onPressed: () {
-                showQuoteDialog(context);
-              },
-            ),
-          ),
-          SizedBox(height: 8),
-          Text('Quote', style: TextStyle(fontSize: 12)),
-        ],
-      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        items: const [
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.call),
             label: 'Emergency calls',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled),
-            label: 'Home',
+            icon: Icon(Icons.bookmark_add),
+            label: 'Quote',
+            backgroundColor: Colors.pink,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle),
+            icon: Stack(
+              children: [
+                Icon(Icons.add_circle),
+                if (alcoholUnits > 0)
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 16,
+                        minHeight: 16,
+                      ),
+                      child: Text(
+                        '$alcoholUnits',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
             label: 'Add bottle',
           ),
         ],
@@ -125,18 +136,30 @@ class _HomePageState extends State<HomePage> {
           switch (index) {
             case 0:
               showCard(
-                  context, 'Emergency Calls', 'Content for emergency calls');
+                  context, 'Emergency Calls', 'Italy: 112');
               break;
             case 1:
               showQuoteDialog(context);
               break;
             case 2:
-              showCard(context, 'Add Bottle', 'Content for adding a bottle');
+              //Want to counts alcohol units
+              _incrementAlcoholUnits();
+              break;
+            default:
               break;
           }
         },
       ),
     );
+    return scaffold;
+  }
+
+  // Function to increment alcohol units count
+  void _incrementAlcoholUnits() {
+    setState(() {
+      alcoholUnits++;
+    });
+    // Optionally, you can show a notification or perform any other action here
   }
 }
 
@@ -151,3 +174,5 @@ void _toLoginPage(BuildContext context) async {
   Navigator.of(context)
       .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
 } //_toCalendarPage
+
+

@@ -15,7 +15,15 @@ import 'package:moder8/screens/quotes.dart';
     "You only live once, but if you do it right, once is enough.",
     "To live is the rarest thing in the world. Most people exist, that is all.",
     "Think like a proton, always positiv",
-    "Life is like riding a bicycle. To keep your balance you must keep moving. - Elbert Einstein"
+    "Life is like riding a bicycle. To keep your balance you must keep moving. - Elbert Einstein", 
+    "If you can change your mind, you can change your life. -William James", 
+    "Nothing is impossible, the word itself says ‘I’m possible. -Audrey Hepborne", 
+    "Choose to be optimistic, it feels better. - Dali Lama", 
+    "You can, you should, and if you’re brave enough to start, you will. -Stephen King", 
+    "Happiness is not by chance, but by choice. -Jim Rohn", 
+    "The bad news is time flies. The good news is you're the pilot.-Michael Altshuler",
+    "I have not failed. I've just found 10,000 ways that won't work. -Thomas A. Edison", 
+    "Don't count the days, make the days count. - Muhammad Ali"
   ];
 
     // Creating a function to show the dialog
@@ -90,4 +98,6 @@ import 'package:moder8/screens/quotes.dart';
     },
   );
 }
+
+
 
