@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => StressPage(stressLevel: 3),
+                  MaterialPageRoute(builder: (context) => StressPage(stressLevel: 2),
                   ),
                 );
                 },

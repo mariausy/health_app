@@ -13,8 +13,8 @@ class StressPage extends StatelessWidget {
       bodyContent = Center(
         child: Card(
           color: Colors.green[100],
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+          child: const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -30,8 +30,8 @@ class StressPage extends StatelessWidget {
       bodyContent = Center(
         child: Card(
           color: Colors.orange[100],
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+          child: const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -47,8 +47,8 @@ class StressPage extends StatelessWidget {
       bodyContent = Center(
         child: Card(
           color: Colors.red[100],
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+          child: const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
