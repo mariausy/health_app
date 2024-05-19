@@ -5,13 +5,21 @@ import 'package:moder8/services/impact.dart';
 import 'package:moder8/widgets/line_plot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moder8/screens/loginpage.dart';
+import 'package:moder8/screens/quotes.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    var scaffold = Scaffold(
       appBar: AppBar(
         title: Text('HomePage'),
       ),
@@ -22,10 +30,10 @@ class HomePage extends StatelessWidget {
             Consumer<DataProvider>(builder: (context, data, child) {
               if (data.heartData.length == 0) {
                 return Text('Nothing to display');
-              }//if
+              } //if
               else {
                 return HeartDataPlot(heartData: data.heartData);
-              }//else
+              } //else
             }),
             SizedBox(
               height: 10,
@@ -39,8 +47,7 @@ class HomePage extends StatelessWidget {
                     ..removeCurrentSnackBar()
                     ..showSnackBar(SnackBar(content: Text(message)));
                 },
-                child: Text('Authorize app')
-            ),
+                child: Text('Authorize app')),
             SizedBox(
               height: 10,
             ),
@@ -49,8 +56,7 @@ class HomePage extends StatelessWidget {
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchHeartData('2023-05-13');
                 },
-                child: Text('Fetch data')
-            ),
+                child: Text('Fetch data')),
             SizedBox(
               height: 10,
             ),
@@ -58,8 +64,7 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   Provider.of<DataProvider>(context, listen: false).clearData();
                 },
-                child: Text('Clear data')
-            ),
+                child: Text('Clear data')),
           ],
         ),
       ),
@@ -67,7 +72,7 @@ class HomePage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
+            const DrawerHeader(
               child: Text('Menu'),
             ),
             ListTile(
@@ -76,18 +81,73 @@ class HomePage extends StatelessWidget {
               onTap: () => _toLoginPage(context),
             ),
           ],
-        ),)
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Tooltip(
+            message: 'Quote app',
+            child: FloatingActionButton(
+              backgroundColor: const Color.fromARGB(255, 241, 153, 182),
+              child: Icon(Icons.bookmark_add),
+              onPressed: () {
+                showQuoteDialog(context);
+              },
+            ),
+          ),
+          SizedBox(height: 8),
+          Text('Quote', style: TextStyle(fontSize: 12)),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.call),
+            label: 'Emergency calls',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_filled),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle),
+            label: 'Add bottle',
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+
+          switch (index) {
+            case 0:
+              showCard(
+                  context, 'Emergency Calls', 'Content for emergency calls');
+              break;
+            case 1:
+              showQuoteDialog(context);
+              break;
+            case 2:
+              showCard(context, 'Add Bottle', 'Content for adding a bottle');
+              break;
+          }
+        },
+      ),
     );
-  } //build
-} //HomePage
+  }
+}
 
-void _toLoginPage(BuildContext context) async{
-    //Get the instance and remove isUserLogged flag from shared preferences 
-    final sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.remove('isUserLogged');
+void _toLoginPage(BuildContext context) async {
+  //Get the instance and remove isUserLogged flag from shared preferences
+  final sharedPreferences = await SharedPreferences.getInstance();
+  await sharedPreferences.remove('isUserLogged');
 
-    //Pop the drawer first 
-    Navigator.pop(context);
-    //Then pop the HomePage
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
-  }//_toCalendarPage 
+  //Pop the drawer first
+  Navigator.pop(context);
+  //Then pop the HomePage
+  Navigator.of(context)
+      .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+} //_toCalendarPage
