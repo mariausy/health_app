@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:moder8/screens/homepage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:moder8/providers/data_provider.dart';
 
@@ -18,9 +17,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(232, 212, 239, 1),
       appBar: AppBar(
         title: Text("Login Page"),
+        backgroundColor: const Color.fromRGBO(232, 212, 239, 1),
       ),
       body: Center(
         child: Column(
@@ -30,7 +31,8 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 controller: userController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
+                    fillColor: Colors.white,
                     border: OutlineInputBorder(),
                     labelText: 'Username',
                     hintText: 'Enter username'),
@@ -43,7 +45,8 @@ class _LoginPageState extends State<LoginPage> {
               TextField(
                 obscureText: true,
                 controller: passwordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
+                    fillColor: Colors.white,
                     border: OutlineInputBorder(),
                     labelText: 'Password',
                     hintText: 'Enter password'),

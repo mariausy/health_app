@@ -5,7 +5,7 @@ import 'package:moder8/services/impact.dart';
 import 'package:moder8/widgets/line_plot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moder8/screens/loginpage.dart';
-import 'package:moder8/screens/quotes.dart';
+// import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -20,54 +20,78 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var scaffold = Scaffold(
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(232, 212, 239, 1),
       appBar: AppBar(
-        title: Text('HomePage'),
+        backgroundColor: const Color.fromRGBO(232, 212, 239, 1),
+        title: const Row(
+          children: [
+            Icon(Icons.wine_bar_outlined),
+            Text('Moder8',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),), 
+          ],
+        ),
       ),
-      body: Center(
-        child: Column(
+      body: ListView(
+        children: <Widget>[
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Consumer<DataProvider>(builder: (context, data, child) {
-              if (data.heartData.length == 0) {
-                return Text('Nothing to display');
-              } //if
-              else {
-                return HeartDataPlot(heartData: data.heartData);
-              } //else
-            }),
-            SizedBox(
-              height: 10,
-            ),
             ElevatedButton(
                 onPressed: () async {
+                  // Clear data
+                  Provider.of<DataProvider>(context, listen: false).clearData();
+
+                  // Authorize
                   final result = await ImpactService.authorize();
                   final message =
                       result == 200 ? 'Request successful' : 'Request failed';
                   ScaffoldMessenger.of(context)
                     ..removeCurrentSnackBar()
                     ..showSnackBar(SnackBar(content: Text(message)));
-                },
-                child: Text('Authorize app')),
-            SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-                onPressed: () {
+
+                  // Fetch data
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchHeartData('2023-05-13');
+                      //DateFormat('yyyy-MM-dd').format(DateTime.now())
+                  Provider.of<DataProvider>(context, listen: false)
+                      .fetchStepData('2023-05-13');
+                  Provider.of<DataProvider>(context, listen: false)
+                      .fetchSleepData('2023-05-13');
                 },
-                child: Text('Fetch data')),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.sync),
+                    Text('Synchronize'), 
+                  ],
+                ),
+            ),
+            Consumer<DataProvider>(builder: (context, data, child) {
+              if (data.heartData.length == 0) {
+                return Text('No heart rate data available');
+              }//if
+              else {
+                return HeartDataPlot(heartData: data.heartData);
+              }//else
+            }),
             SizedBox(
               height: 10,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Provider.of<DataProvider>(context, listen: false).clearData();
-                },
-                child: Text('Clear data')),
+            ),            
+            Consumer<DataProvider>(builder: (context, data, child) {
+              if (data.stepData.length == 0 || data.sleepData.length==0) {
+                return Text('No data available for daily goals');
+              }//if
+              else {
+                return DailyCircle(stepData: data.stepData, sleepData: data.sleepData);
+              }//else
+            }),
           ],
         ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -79,7 +103,10 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Logout'),
-              onTap: () => _toLoginPage(context),
+              onTap: () {
+                Provider.of<DataProvider>(context, listen: false).clearData();
+                _toLoginPage(context);
+              },
             ),
           ],
         ),
