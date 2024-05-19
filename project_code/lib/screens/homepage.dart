@@ -19,6 +19,38 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   int alcoholUnits = 0; //variable to store abounts of alohol units
 
+    @override
+  void initState() {
+    super.initState();
+    _loadAlcoholUnits(); // Load alcohol units count when app starts
+  }
+
+  void _loadAlcoholUnits() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final count = sharedPreferences.getInt('alcoholUnits') ?? 0;
+    setState(() {
+      alcoholUnits = count;
+    });
+  }
+
+  void _incrementAlcoholUnits() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final newCount = alcoholUnits + 1;
+    sharedPreferences.setInt('alcoholUnits', newCount);
+    setState(() {
+      alcoholUnits = newCount;
+    });
+  }
+
+  void _clearAlcoholUnits() async {
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sharedPreferences.setInt('alcoholUnits', 0);
+  setState(() {
+    alcoholUnits = 0;
+  });
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +154,6 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark_add),
             label: 'Quote',
-            backgroundColor: Colors.pink,
           ),
           BottomNavigationBarItem(
             icon: Stack(
@@ -134,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                     child: Container(
                       padding: EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: Colors.redAccent,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       constraints: BoxConstraints(
@@ -178,16 +209,29 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
+      floatingActionButton: FloatingActionButton(
+      onPressed: _clearAlcoholUnits,
+      child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+      Icon(Icons.delete), // Icon displayed above the text
+      SizedBox(height: 4), // Spacer between icon and text
+      Text('Clear'), // Text displayed under the icon
+    ],
+  ),
+),
+
+
     );
   }
 
   // Function to increment alcohol units count
-  void _incrementAlcoholUnits() {
-    setState(() {
-      alcoholUnits++;
-    });
+ // void _incrementAlcoholUnits() {
+   // setState(() {
+   //   alcoholUnits++;
+   // });
     // Optionally, you can show a notification or perform any other action here
-  }
+ // }
 }
 
 void _toLoginPage(BuildContext context) async {
@@ -201,5 +245,4 @@ void _toLoginPage(BuildContext context) async {
   Navigator.of(context)
       .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
 } //_toCalendarPage
-
 

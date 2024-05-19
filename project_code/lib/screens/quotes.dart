@@ -18,7 +18,7 @@ import 'package:moder8/screens/quotes.dart';
     "Life is like riding a bicycle. To keep your balance you must keep moving. - Elbert Einstein", 
     "If you can change your mind, you can change your life. -William James", 
     "Nothing is impossible, the word itself says ‘I’m possible. -Audrey Hepborne", 
-    "Choose to be optimistic, it feels better. - Dali Lama", 
+    "Choose to be optimistic, it feels better. - Dalai Lama", 
     "You can, you should, and if you’re brave enough to start, you will. -Stephen King", 
     "Happiness is not by chance, but by choice. -Jim Rohn", 
     "The bad news is time flies. The good news is you're the pilot.-Michael Altshuler",
