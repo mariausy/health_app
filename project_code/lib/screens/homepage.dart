@@ -162,6 +162,20 @@ class _HomePageState extends State<HomePage> {
                       stepData: data.stepData, sleepData: data.sleepData);
                 } //else
               }),
+              SizedBox(
+              height: 10,
+              ),
+              Consumer<DataProvider>(builder: (context, data, child) {
+                if (data.stepData.length != 0 && data.sleepData.length!=0) {
+                  int steps = 0;
+                  for(StepData sample in data.stepData){
+                      steps += sample.value;
+                  }
+                  double asleep = data.sleepData.first.minutesAsleep.toDouble()/60;
+                  return Text('Steps: $steps out of 10000\nSleep: ${asleep.toStringAsFixed(2)} out of 7 hours');
+                }
+                return const Text('');
+              }),
             ],
           ),
         ],

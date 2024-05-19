@@ -79,8 +79,10 @@ class StressPage extends StatelessWidget {
     }
 
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(232, 212, 239, 1),
       appBar: AppBar(
         title: Text('Stress Page'),
+        backgroundColor: const Color.fromRGBO(232, 212, 239, 1),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
