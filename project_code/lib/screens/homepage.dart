@@ -9,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moder8/screens/loginpage.dart';
 import 'package:intl/intl.dart';
 import 'package:moder8/screens/quotes.dart';
+import 'package:moder8/models/stepdata.dart';
+import 'package:moder8/models/sleepdata.dart';
 import 'package:moder8/screens/stress_page.dart';
 
 class HomePage extends StatefulWidget {
