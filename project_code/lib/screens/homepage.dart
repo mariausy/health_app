@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moder8/models/stress_level.dart';
 import 'package:provider/provider.dart';
 import 'package:moder8/providers/data_provider.dart';
 import 'package:moder8/services/impact.dart';
@@ -80,7 +81,17 @@ class _HomePageState extends State<HomePage> {
             }),
             SizedBox(
               height: 10,
-            ),            
+            ), 
+            /*
+            Consumer<DataProvider>(builder: (context, data, child) {
+              if (data.heartData.length == 0) {
+                return Text('');
+              }//if
+              else {
+                return StressLevel(heartData: data.heartData);
+              }//else
+            }),
+            */           
             Consumer<DataProvider>(builder: (context, data, child) {
               if (data.stepData.length == 0 || data.sleepData.length==0) {
                 return Text('No data available for daily goals');
