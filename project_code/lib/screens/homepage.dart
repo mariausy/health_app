@@ -24,6 +24,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   int alcoholUnits = 0; //variable to store abounts of alohol units
+  int stessLevelNumber = 1;
 
   @override
   void initState() {
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => StressPage(stressLevel: 2),
+                  MaterialPageRoute(builder: (context) => StressPage(stressLevel: stessLevelNumber),
                   ),
                 );
                 },
@@ -147,6 +148,7 @@ class _HomePageState extends State<HomePage> {
                 else {
                   StressLevel stressLevel = StressLevel(heartData: data.heartData);
                   String stressLevelText = stressLevel.calculateStressLevel();
+                  stessLevelNumber = stressLevel.getstressLevels();
                   return Text("Stress Level: $stressLevelText");
                 }//else
               }),
