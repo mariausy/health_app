@@ -6,9 +6,18 @@ import 'package:moder8/widgets/line_plot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moder8/screens/loginpage.dart';
 // import 'package:intl/intl.dart';
+import 'package:moder8/screens/quotes.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  int alcoholUnits = 0; //variable to store abounts of alohol units
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +98,7 @@ class HomePage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
+            const DrawerHeader(
               child: Text('Menu'),
             ),
             ListTile(
@@ -101,18 +110,96 @@ class HomePage extends StatelessWidget {
               },
             ),
           ],
-        ),)
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.call),
+            label: 'Emergency calls',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark_add),
+            label: 'Quote',
+            backgroundColor: Colors.pink,
+          ),
+          BottomNavigationBarItem(
+            icon: Stack(
+              children: [
+                Icon(Icons.add_circle),
+                if (alcoholUnits > 0)
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 16,
+                        minHeight: 16,
+                      ),
+                      child: Text(
+                        '$alcoholUnits',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            label: 'Add bottle',
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+
+          switch (index) {
+            case 0:
+              showCard(
+                  context, 'Emergency Calls', 'Italy: 112');
+              break;
+            case 1:
+              showQuoteDialog(context);
+              break;
+            case 2:
+              //Want to counts alcohol units
+              _incrementAlcoholUnits();
+              break;
+            default:
+              break;
+          }
+        },
+      ),
     );
-  } //build
-} //HomePage
+  }
 
-void _toLoginPage(BuildContext context) async{
-    //Get the instance and remove isUserLogged flag from shared preferences 
-    final sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.remove('isUserLogged');
+  // Function to increment alcohol units count
+  void _incrementAlcoholUnits() {
+    setState(() {
+      alcoholUnits++;
+    });
+    // Optionally, you can show a notification or perform any other action here
+  }
+}
 
-    //Pop the drawer first 
-    Navigator.pop(context);
-    //Then pop the HomePage
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
-  }//_toCalendarPage 
+void _toLoginPage(BuildContext context) async {
+  //Get the instance and remove isUserLogged flag from shared preferences
+  final sharedPreferences = await SharedPreferences.getInstance();
+  await sharedPreferences.remove('isUserLogged');
+
+  //Pop the drawer first
+  Navigator.pop(context);
+  //Then pop the HomePage
+  Navigator.of(context)
+      .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+} //_toCalendarPage
+
+
