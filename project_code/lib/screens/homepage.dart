@@ -13,8 +13,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(232, 212, 239, 1),
       appBar: AppBar(
-        title: Text('moder8'),
+        backgroundColor: const Color.fromRGBO(232, 212, 239, 1),
+        title: const Row(
+          children: [
+            Icon(Icons.wine_bar_outlined),
+            Text('Moder8',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),), 
+          ],
+        ),
       ),
       body: ListView(
         children: <Widget>[
@@ -43,7 +54,13 @@ class HomePage extends StatelessWidget {
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchSleepData('2023-05-13');
                 },
-                child: Text('Synchronize')
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.sync),
+                    Text('Synchronize'), 
+                  ],
+                ),
             ),
             Consumer<DataProvider>(builder: (context, data, child) {
               if (data.heartData.length == 0) {
@@ -78,7 +95,10 @@ class HomePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Logout'),
-              onTap: () => _toLoginPage(context),
+              onTap: () {
+                Provider.of<DataProvider>(context, listen: false).clearData();
+                _toLoginPage(context);
+              },
             ),
           ],
         ),)

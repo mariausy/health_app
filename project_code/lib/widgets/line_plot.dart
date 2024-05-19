@@ -17,6 +17,7 @@ class HeartDataPlot extends StatelessWidget {
   Widget build(BuildContext context) {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       title: ChartTitle(text: 'Heart rate'),
       primaryXAxis: const DateTimeAxis(majorGridLines: MajorGridLines(width: 0)),
       primaryYAxis: const NumericAxis(
