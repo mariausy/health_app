@@ -14,40 +14,27 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HomePage'),
+        title: Text('moder8'),
       ),
       body: ListView(
         children: <Widget>[
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Consumer<DataProvider>(builder: (context, data, child) {
-              if (data.heartData.length == 0) {
-                return Text('Nothing to display');
-              }//if
-              else {
-                return HeartDataPlot(heartData: data.heartData);
-              }//else
-            }),
-            SizedBox(
-              height: 10,
-            ),
             ElevatedButton(
                 onPressed: () async {
+                  // Clear data
+                  Provider.of<DataProvider>(context, listen: false).clearData();
+
+                  // Authorize
                   final result = await ImpactService.authorize();
                   final message =
                       result == 200 ? 'Request successful' : 'Request failed';
                   ScaffoldMessenger.of(context)
                     ..removeCurrentSnackBar()
                     ..showSnackBar(SnackBar(content: Text(message)));
-                },
-                child: Text('Authorize app')
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-                onPressed: () {
+
+                  // Fetch data
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchHeartData('2023-05-13');
                       //DateFormat('yyyy-MM-dd').format(DateTime.now())
@@ -56,23 +43,22 @@ class HomePage extends StatelessWidget {
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchSleepData('2023-05-13');
                 },
-                child: Text('Fetch data')
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Provider.of<DataProvider>(context, listen: false).clearData();
-                },
-                child: Text('Clear data')
-            ),
-            SizedBox(
-              height: 10,
+                child: Text('Synchronize')
             ),
             Consumer<DataProvider>(builder: (context, data, child) {
+              if (data.heartData.length == 0) {
+                return Text('No heart rate data available');
+              }//if
+              else {
+                return HeartDataPlot(heartData: data.heartData);
+              }//else
+            }),
+            SizedBox(
+              height: 10,
+            ),            
+            Consumer<DataProvider>(builder: (context, data, child) {
               if (data.stepData.length == 0 || data.sleepData.length==0) {
-                return Text('Nothing to display');
+                return Text('No data available for daily goals');
               }//if
               else {
                 return DailyCircle(stepData: data.stepData, sleepData: data.sleepData);
