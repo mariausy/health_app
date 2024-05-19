@@ -70,7 +70,7 @@ class StressPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.help_outline, size: 50, color: Colors.grey),
-                Text('Unknown Stress Level', style: TextStyle(fontSize: 24)),
+                Text('Unknown Stress Level, syncronize the app', style: TextStyle(fontSize: 22)),
               ],
             ),
           ),
