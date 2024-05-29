@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   int alcoholUnits = 0; //variable to store abounts of alohol units
-  int stessLevelNumber = 1;
+  int stessLevelNumber = 0;
 
   @override
   void initState() {
