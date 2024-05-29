@@ -54,17 +54,22 @@ class DataProvider extends ChangeNotifier {
     final data = await ImpactService.fetchSleepData(day);
 
     //if OK parse the response adding all the elements to the list, otherwise do nothing
-    if (data != null) {
-      if(data['data']['data'][0] is Map<String, dynamic>){
-        sleepData.add(
-          SleepData.fromJson(data['data']['date'], data['data']['data'][0]));
-      }
-      else if(data['data']['data'] is Map<String, dynamic>){
-        sleepData.add(
-          SleepData.fromJson(data['data']['date'], data['data']['data']));
-      }
+    try{
+      if (data != null) {
+          if(data['data']['data'][0] is Map<String, dynamic>){
+            sleepData.add(
+              SleepData.fromJson(data['data']['date'], data['data']['data'][0]));
+          }
+          else if(data['data']['data'] is Map<String, dynamic>){
+            sleepData.add(
+              SleepData.fromJson(data['data']['date'], data['data']['data']));
+          } 
+      } //for
+    }
+    catch(e){
+      print('Error collecting the sleep data: $e');
+    }
     
-    } //for
     //remember to notify the listeners
     notifyListeners();
 

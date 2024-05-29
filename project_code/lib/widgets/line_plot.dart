@@ -62,14 +62,19 @@ class DailyCircle extends StatelessWidget {
   /// The method returns line series to chart.
   List<CircularSeries> _getDataCircleSeries() {
     int steps=0;
-    for(StepData sample in stepData){
-      steps += sample.value;
+    if (stepData.isNotEmpty){
+      for(StepData sample in stepData){
+        steps += sample.value;
+      }
     }
+
+    double sleep=0;
+    if(sleepData.isNotEmpty) sleep = sleepData.first.minutesAsleep.toDouble()*10000/420;
 
     final List<ChartData> chartData = [
         ChartData('Steps', steps.toDouble(), Color.fromRGBO(69, 187, 161, 1)),
         //convert goal to be maximum 10000 (same as the step goal) is done by finding percentage and scaling
-        ChartData('Sleep', sleepData.first.minutesAsleep.toDouble()*10000/420, const Color.fromRGBO(145, 132, 202, 1)),
+        ChartData('Sleep', sleep, const Color.fromRGBO(145, 132, 202, 1)),
     ];
 
     return <CircularSeries>[
