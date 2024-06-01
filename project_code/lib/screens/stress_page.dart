@@ -35,7 +35,7 @@ class StressPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.sentiment_satisfied, size: 50, color: Colors.orange),
+                Icon(Icons.sentiment_satisfied, size: 50, color: Colors.lightGreen),
                 Text('Low Stress', style: TextStyle(fontSize: 24)),
                 Text('Keep up your good habits and make sure you get enough rest.',style: TextStyle(fontSize: 18)),
               ],
@@ -70,7 +70,7 @@ class StressPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.sentiment_very_dissatisfied, size: 50, color: Colors.red),
+                Icon(Icons.sentiment_very_dissatisfied, size: 50, color: Colors.pink),
                 Text('High Stress', style: TextStyle(fontSize: 24)),
                 Text('Your stress level is high, have you tried meditation?',style: TextStyle(fontSize: 18)),
               ],
