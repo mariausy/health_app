@@ -18,16 +18,20 @@ class DataProvider extends ChangeNotifier {
     final data = await ImpactService.fetchStepData(day);
 
     //if OK parse the response adding all the elements to the list, otherwise do nothing
-    if (data != null) {
-      for (var i = 0; i < data['data']['data'].length; i++) {
-        stepData.add(
-            StepData.fromJson(data['data']['date'], data['data']['data'][i]));
-      } //for
+    try{  
+      if (data != null) {
+        for (var i = 0; i < data['data']['data'].length; i++) {
+          stepData.add(
+              StepData.fromJson(data['data']['date'], data['data']['data'][i]));
+        } //for
 
-      //remember to notify the listeners
-      notifyListeners();
-    }//if
-
+        //remember to notify the listeners
+        notifyListeners();
+      }//if
+    }
+    catch(e){
+      print('Error collecting the step data: $e');
+    }
   }//fetchStepData
 
   void fetchHeartData(String day) async {
@@ -36,16 +40,20 @@ class DataProvider extends ChangeNotifier {
     final data = await ImpactService.fetchHeartData(day);
 
     //if OK parse the response adding all the elements to the list, otherwise do nothing
-    if (data != null) {
-      for (var i = 0; i < data['data']['data'].length; i++) {
-        heartData.add(
-            HeartData.fromJson(data['data']['date'], data['data']['data'][i]));
-      } //for
+    try{  
+      if (data != null) {
+        for (var i = 0; i < data['data']['data'].length; i++) {
+          heartData.add(
+              HeartData.fromJson(data['data']['date'], data['data']['data'][i]));
+        } //for
 
-      //remember to notify the listeners
-      notifyListeners();
-    }//if
-
+        //remember to notify the listeners
+        notifyListeners();
+      }//if
+    }
+    catch(e){
+      print('Error collecting the heartrate data: $e');
+    }
   }
 
   void fetchSleepData(String day) async {
