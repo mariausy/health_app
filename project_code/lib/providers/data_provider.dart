@@ -12,10 +12,10 @@ class DataProvider extends ChangeNotifier {
   List<SleepData> sleepData = [];
 
   //Method to fetch step data from the server
-  void fetchStepData(String day) async {
+  void fetchStepData(String day,String patientUsername) async {
 
     //Get the response
-    final data = await ImpactService.fetchStepData(day);
+    final data = await ImpactService.fetchStepData(day,patientUsername);
 
     //if OK parse the response adding all the elements to the list, otherwise do nothing
     try{  
@@ -34,10 +34,10 @@ class DataProvider extends ChangeNotifier {
     }
   }//fetchStepData
 
-  void fetchHeartData(String day) async {
+  void fetchHeartData(String day,String patientUsername) async {
 
   //Get the response
-    final data = await ImpactService.fetchHeartData(day);
+    final data = await ImpactService.fetchHeartData(day,patientUsername);
 
     //if OK parse the response adding all the elements to the list, otherwise do nothing
     try{  
@@ -56,10 +56,10 @@ class DataProvider extends ChangeNotifier {
     }
   }
 
-  void fetchSleepData(String day) async {
+  void fetchSleepData(String day,String patientUsername) async {
 
     //Get the response
-    final data = await ImpactService.fetchSleepData(day);
+    final data = await ImpactService.fetchSleepData(day,patientUsername);
 
     //if OK parse the response adding all the elements to the list, otherwise do nothing
     try{

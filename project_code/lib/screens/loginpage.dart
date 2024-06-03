@@ -14,6 +14,15 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController userController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String patientUsername = ""; 
+
+  void _UpdatePatientUsername(String patient) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('patientUsername', patient);
+    setState(() {
+      patientUsername = patient;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +69,9 @@ class _LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                 onPressed: () async{
                   //Check user's credentials...
-                  if(userController.text == 'Jpefaq6m58' && passwordController.text == '5TrNga'){
+                  if(userController.text == 'Jpefaq6m58' && passwordController.text == '5TrNga'){ 
+                    _UpdatePatientUsername(userController.text);
+
                     //...if they are correct get the instance of SharedPreferences
                     final sharedPreferences = await SharedPreferences.getInstance();
                     //...and set the isUserLogged flag

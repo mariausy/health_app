@@ -24,11 +24,13 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   int alcoholUnits = 0; //variable to store abounts of alohol units
   int stessLevelNumber = 0;
+  String patientUsername = ""; 
 
   @override
   void initState() {
     super.initState();
     _loadAlcoholUnits(); // Load alcohol units count when app starts
+    _loadPatientUsername(); // Load patient username that is used on the login page
   }
 
   void _loadAlcoholUnits() async {
@@ -36,6 +38,14 @@ class _HomePageState extends State<HomePage> {
     final count = sharedPreferences.getInt('alcoholUnits') ?? 0;
     setState(() {
       alcoholUnits = count;
+    });
+  }
+
+  void _loadPatientUsername() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final savedUsername = sharedPreferences.getString('patientUsername') ?? "";
+    setState(() {
+      patientUsername = savedUsername;
     });
   }
 
@@ -96,13 +106,13 @@ class _HomePageState extends State<HomePage> {
                   // Fetch data
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchHeartData(DateFormat('yyyy-MM-dd').format(
-                          DateTime.now().subtract(const Duration(days: 1))));
+                          DateTime.now().subtract(const Duration(days: 1))), patientUsername);
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchStepData(DateFormat('yyyy-MM-dd').format(
-                          DateTime.now().subtract(const Duration(days: 1))));
+                          DateTime.now().subtract(const Duration(days: 1))), patientUsername);
                   Provider.of<DataProvider>(context, listen: false)
                       .fetchSleepData(DateFormat('yyyy-MM-dd').format(
-                          DateTime.now().subtract(const Duration(days: 1))));
+                          DateTime.now().subtract(const Duration(days: 1))),patientUsername);
                 },
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,

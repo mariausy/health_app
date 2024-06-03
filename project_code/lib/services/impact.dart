@@ -19,8 +19,6 @@ class ImpactService {
   static String username = '14OtgfFznc';
   static String password = '12345678!';
 
-  static String patientUsername = 'Jpefaq6m58';
-
   //This method allows to obtain the JWT token pair from IMPACT and store it in SharedPreferences
   static Future<int?> authorize() async {
     //Create the request
@@ -70,7 +68,7 @@ class ImpactService {
   } //_refreshTokens
 
   //This method allows to obtain the JWT token pair from IMPACT and store it in SharedPreferences
-  static Future<dynamic> fetchStepData(String day) async {
+  static Future<dynamic> fetchStepData(String day, String patientUsername) async {
 
     //Get the stored access token (Note that this code does not work if the tokens are null)
     final sp = await SharedPreferences.getInstance();
@@ -83,7 +81,7 @@ class ImpactService {
     }//if
 
     //Create the (representative) request
-    final url = ImpactService.baseUrl + ImpactService.stepsEndpoint + ImpactService.patientUsername + '/day/$day/';
+    final url = ImpactService.baseUrl + ImpactService.stepsEndpoint + patientUsername + '/day/$day/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     //Get the response
@@ -101,7 +99,7 @@ class ImpactService {
 
   } //_requestData
 
-  static Future<dynamic> fetchHeartData(String day) async {
+  static Future<dynamic> fetchHeartData(String day, String patientUsername) async {
 
     //Get the stored access token (Note that this code does not work if the tokens are null)
     final sp = await SharedPreferences.getInstance();
@@ -114,7 +112,7 @@ class ImpactService {
     }//if
 
     //Create the (representative) request
-    final url = ImpactService.baseUrl + ImpactService.heartEndpoint + ImpactService.patientUsername + '/day/$day/';
+    final url = ImpactService.baseUrl + ImpactService.heartEndpoint + patientUsername + '/day/$day/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     //Get the response
@@ -132,7 +130,7 @@ class ImpactService {
 
   } //_requestData
 
-  static Future<dynamic> fetchSleepData(String day) async {
+  static Future<dynamic> fetchSleepData(String day,String patientUsername) async {
 
     //Get the stored access token (Note that this code does not work if the tokens are null)
     final sp = await SharedPreferences.getInstance();
@@ -145,7 +143,7 @@ class ImpactService {
     }//if
 
     //Create the (representative) request
-    final url = ImpactService.baseUrl + ImpactService.sleepEndpoint + ImpactService.patientUsername + '/day/$day/';
+    final url = ImpactService.baseUrl + ImpactService.sleepEndpoint + patientUsername + '/day/$day/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     //Get the response
